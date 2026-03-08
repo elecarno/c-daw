@@ -1,4 +1,4 @@
-#include "./clay-raylib/clay.h"
+#include "clay-raylib/clay.h"
 #include <stdlib.h>
 
 const int FONT_ID_BODY_16 = 0;

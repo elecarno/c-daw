@@ -1,36 +1,52 @@
+// clay and raylib
 #define CLAY_IMPLEMENTATION
-#include "./clay-raylib/clay.h"
-#include "./clay-raylib/clay_renderer_raylib.c"
-#include "./shared.c"
+#include "clay-raylib/clay.h"
+#include "clay-raylib/clay_renderer_raylib.c"
 
-// This function is new since the video was published
+// shared data and component/layout headesr
+#include "headers/globals.h"
+#include "headers/components.h"
+#include "headers/layouts.h"
+
 void HandleClayErrors(Clay_ErrorData errorData) {
     printf("%s", errorData.errorText.chars);
 }
 
 int main(void) {
-    Clay_Raylib_Initialize(1024, 768, "Introducing Clay Demo", FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT); // Extra parameters to this function are new since the video was published
+    Clay_Raylib_Initialize(
+        1280, 720, // width and height
+        "c-DAW", // window title
+        FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT //flags
+    );
 
+    // get memory allocation
     uint64_t clayRequiredMemory = Clay_MinMemorySize();
-    Clay_Arena clayMemory = Clay_CreateArenaWithCapacityAndMemory(clayRequiredMemory, malloc(clayRequiredMemory));
+    Clay_Arena clayMemory = Clay_CreateArenaWithCapacityAndMemory(
+        clayRequiredMemory, 
+        malloc(clayRequiredMemory)
+    );
+
+    // initalise clay using memory information
     Clay_Initialize(clayMemory, (Clay_Dimensions) {
        .width = GetScreenWidth(),
        .height = GetScreenHeight()
-    }, (Clay_ErrorHandler) { HandleClayErrors }); // This final argument is new since the video was published
+    }, (Clay_ErrorHandler) { HandleClayErrors });
+
+    // handle fonts
     Font fonts[1];
-    fonts[FONT_ID_BODY_16] = LoadFontEx("resources/Roboto-Regular.ttf", 48, 0, 400);
+    fonts[FONT_ID_BODY_16] = LoadFontEx("resources/fonts/Atkinson_Hyperlegible_Next/static/AtkinsonHyperlegibleNext-Regular.ttf", 48, 0, 400);
     SetTextureFilter(fonts[FONT_ID_BODY_16].texture, TEXTURE_FILTER_BILINEAR);
     Clay_SetMeasureTextFunction(Raylib_MeasureText, fonts);
 
-    ClayVideoDemo_Data data = ClayVideoDemo_Initialize();
-
+    // update loop (per frame)
     while (!WindowShouldClose()) {
-        // Run once per frame
+        // update dimensions every frame to handle resizing
         Clay_SetLayoutDimensions((Clay_Dimensions) {
             .width = GetScreenWidth(),
             .height = GetScreenHeight()
         });
 
+        // handle input
         Vector2 mousePosition = GetMousePosition();
         Vector2 scrollDelta = GetMouseWheelMoveV();
         Clay_SetPointerState(
@@ -43,13 +59,15 @@ int main(void) {
             GetFrameTime()
         );
 
-        Clay_RenderCommandArray renderCommands = ClayVideoDemo_CreateLayout(&data);
+        // get layout render commands for the ui
+        Clay_RenderCommandArray renderCommands = layoutEditor();
 
+        // draw the ui
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(BLACK); // clear the screen each
         Clay_Raylib_Render(renderCommands, fonts);
         EndDrawing();
     }
-    // This function is new since the video was published
+
     Clay_Raylib_Close();
 }

@@ -18,7 +18,12 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
-add_executable(c-daw main.c)
+add_executable(c-daw 
+    main.c
+    headers/globals.c
+    components/cButton.c
+    layouts/layoutEditor.c
+)
 
 target_compile_options(c-daw PUBLIC)
 target_include_directories(c-daw PUBLIC .)
