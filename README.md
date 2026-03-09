@@ -9,3 +9,9 @@ between all layouts, components, and the `main.c` file.
 cmake -S . -B build -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl
 cmake --build build
 ```
+
+#### Library Plans
+ - Port Audio (Audio I/O)
+ - libsndfile (file and codec handling)
+ - KFR or FFTW (signal processing)
+ - VST3 SDK or CLAP (plugin hosting)

@@ -1,4 +1,4 @@
-#include "clay-raylib/clay.h"
+#include "includes/clay.h"
 #include "globals.h"
 
 // fonts

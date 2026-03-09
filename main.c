@@ -1,7 +1,7 @@
 // clay and raylib
 #define CLAY_IMPLEMENTATION
-#include "clay-raylib/clay.h"
-#include "clay-raylib/clay_renderer_raylib.c"
+#include "includes/clay.h"
+#include "includes/clay_renderer_raylib.c"
 
 // shared data and component/layout headesr
 #include "headers/globals.h"

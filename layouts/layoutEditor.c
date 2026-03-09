@@ -1,4 +1,4 @@
-#include "../clay-raylib/clay.h"
+#include "../includes/clay.h"
 #include "../headers/globals.h"
 #include "../headers/layouts.h" 
 
