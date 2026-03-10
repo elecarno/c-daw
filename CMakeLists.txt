@@ -15,8 +15,16 @@ FetchContent_Declare(
     GIT_PROGRESS TRUE
     GIT_SHALLOW TRUE
 )
+FetchContent_Declare(
+    nfd
+    GIT_REPOSITORY "https://github.com/btzy/nativefiledialog-extended.git"
+    GIT_TAG "v1.2.1" # Or the latest stable tag
+)
+set(NFD_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(NFD_INSTALL OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(raylib)
+FetchContent_MakeAvailable(nfd)
 
 set(ENGINE_SRC
     engine/engine.c
@@ -41,7 +49,7 @@ add_executable(c-daw
 target_compile_options(c-daw PUBLIC)
 target_include_directories(c-daw PUBLIC .)
 
-target_link_libraries(c-daw PUBLIC raylib)
+target_link_libraries(c-daw PUBLIC raylib nfd)
 
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")

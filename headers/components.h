@@ -3,8 +3,9 @@
 
 #include "../includes/clay.h"
 
-typedef void (*ButtonAction)(void);
+// custom callback pointer for reuseable button components
+typedef void (*ButtonCallback)(void);
 
-void cButton(Clay_String text, ButtonAction onClick);
+void cButton(Clay_String text, ButtonCallback onClick);
 
 #endif

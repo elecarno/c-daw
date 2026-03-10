@@ -29,5 +29,6 @@ extern DAWEngine g_Engine;
 
 // functions from engine.c
 bool AddTrackFromFile(DAWEngine* engine, const char* filePath);
+void HandleLoadButton();
 
 #endif

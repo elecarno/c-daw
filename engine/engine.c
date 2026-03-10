@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <nfd.h>
 #include "engine.h"
 
 #define MINIAUDIO_IMPLEMENTATION
@@ -79,27 +80,27 @@ bool AddTrackFromFile(DAWEngine* engine, const char* filePath) {
 }
 
 // FILE LOADING ------------------------------------------------------------------------------------
-// void HandleLoadButton() {
-//     nfdchar_t *outPath = NULL;
-//     // Filter for audio files
-//     nfdfilteritem_t filterItem[3] = { { "Audio Files", "wav,mp3,flac" }, { "WAV", "wav" }, { "MP3", "mp3" } };
+void HandleLoadButton() {
+    nfdchar_t *outPath = NULL;
+    // Filter for audio files
+    nfdfilteritem_t filterItem[3] = { { "Audio Files", "wav,mp3,flac" }, { "WAV", "wav" }, { "MP3", "mp3" } };
     
-//     // This opens the actual Windows/Mac/Linux file picker
-//     nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 3, NULL);
+    // This opens the actual Windows/Mac/Linux file picker
+    nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 3, NULL);
 
-//     if (result == NFD_OKAY) {
-//         printf("Success! Loading: %s\n", outPath);
+    if (result == NFD_OKAY) {
+        printf("Success! Loading: %s\n", outPath);
         
-//         // Use the function we wrote earlier!
-//         AddTrackFromFile(&g_Engine, outPath);
+        // Use the function we wrote earlier!
+        AddTrackFromFile(&g_Engine, outPath);
         
-//         // Remember to free the path memory allocated by NFD
-//         NFD_FreePath(outPath);
-//     } 
-//     else if (result == NFD_CANCEL) {
-//         printf("User pressed cancel.\n");
-//     } 
-//     else {
-//         printf("Error: %s\n", NFD_GetError());
-//     }
-// }
+        // Remember to free the path memory allocated by NFD
+        NFD_FreePath(outPath);
+    } 
+    else if (result == NFD_CANCEL) {
+        printf("User pressed cancel.\n");
+    } 
+    else {
+        printf("Error: %s\n", NFD_GetError());
+    }
+}

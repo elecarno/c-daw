@@ -2,6 +2,7 @@
 #include "../headers/globals.h"
 #include "../headers/layouts.h" 
 #include "../headers/components.h"
+#include "../engine/engine.h"
 
 #include <stdio.h>
 
@@ -9,7 +10,8 @@ bool pressedImportFile = false;
 
 // interaction functions
 void buttonImportFile() {
-    printf("pressed");
+    printf("pressed import");
+    HandleLoadButton();
 }
 
 

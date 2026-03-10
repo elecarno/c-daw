@@ -4,7 +4,10 @@
 
 // Button interaction callback
 void HandleButtonInteraction(Clay_ElementId elementId, Clay_PointerData pointerData, void* userData) {
-    ButtonAction onClick = (ButtonAction)userData;
+    // cast void* back to the function pointer
+    ButtonCallback onClick = (ButtonCallback)userData;
+    
+    // check for mouse click
     if (pointerData.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME) {
         if (onClick != NULL) {
             onClick();
@@ -13,7 +16,7 @@ void HandleButtonInteraction(Clay_ElementId elementId, Clay_PointerData pointerD
 }
 
 // Base Button
-void cButton(Clay_String text, ButtonAction onClick) {
+void cButton(Clay_String text, ButtonCallback onClick) {
     CLAY(
         CLAY_IDI("Button", text.length), {
         .layout = { .padding = { 16, 16, 8, 8 }},
