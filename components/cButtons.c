@@ -2,6 +2,7 @@
 #include "../headers/globals.h"
 #include "../headers/components.h"
 
+// Base Button
 void cButton(Clay_String text) {
     CLAY_AUTO_ID({
         .layout = { .padding = { 16, 16, 8, 8 }},

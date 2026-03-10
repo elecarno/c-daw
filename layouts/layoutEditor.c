@@ -1,6 +1,7 @@
 #include "../includes/clay.h"
 #include "../headers/globals.h"
 #include "../headers/layouts.h" 
+#include "../headers/components.h"
 
 Clay_RenderCommandArray layoutEditor() {
     Clay_BeginLayout(); // BEGIN LAYOUT
@@ -20,7 +21,9 @@ Clay_RenderCommandArray layoutEditor() {
             .padding = CLAY_PADDING_ALL(16),
             .childGap = 16
         }
-    }) {}
+    }) {
+        cButton(CLAY_STRING("Import Audio File"));
+    }
 
     // END LAYOUT
     Clay_RenderCommandArray renderCommands = Clay_EndLayout();

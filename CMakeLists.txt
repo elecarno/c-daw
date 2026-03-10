@@ -23,7 +23,7 @@ set(ENGINE_SRC
 )
 
 set(COMPONENTS_SRC
-    components/cButton.c
+    components/cButtons.c
 )
 
 set(LAYOUTS_SRC
