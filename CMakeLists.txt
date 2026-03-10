@@ -18,11 +18,19 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
+set(COMPONENTS_SRC
+    components/cButton.c
+)
+
+set(LAYOUTS_SRC
+    layouts/layoutEditor.c
+)
+
 add_executable(c-daw 
     main.c
     headers/globals.c
-    components/cButton.c
-    layouts/layoutEditor.c
+    ${COMPONENTS_SRC}
+    ${LAYOUTS_SRC}
 )
 
 target_compile_options(c-daw PUBLIC)
