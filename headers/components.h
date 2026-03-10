@@ -3,6 +3,8 @@
 
 #include "../includes/clay.h"
 
-void cButton(Clay_String text);
+typedef void (*ButtonAction)(void);
+
+void cButton(Clay_String text, ButtonAction onClick);
 
 #endif

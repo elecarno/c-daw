@@ -3,6 +3,17 @@
 #include "../headers/layouts.h" 
 #include "../headers/components.h"
 
+#include <stdio.h>
+
+bool pressedImportFile = false;
+
+// interaction functions
+void buttonImportFile() {
+    printf("pressed");
+}
+
+
+// layout
 Clay_RenderCommandArray layoutEditor() {
     Clay_BeginLayout(); // BEGIN LAYOUT
 
@@ -22,7 +33,7 @@ Clay_RenderCommandArray layoutEditor() {
             .childGap = 16
         }
     }) {
-        cButton(CLAY_STRING("Import Audio File"));
+        cButton(CLAY_STRING("Import Audio File"), buttonImportFile);
     }
 
     // END LAYOUT
