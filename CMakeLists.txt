@@ -18,6 +18,10 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
+set(ENGINE_SRC
+    engine/engine.c
+)
+
 set(COMPONENTS_SRC
     components/cButton.c
 )
@@ -29,6 +33,7 @@ set(LAYOUTS_SRC
 add_executable(c-daw 
     main.c
     headers/globals.c
+    ${ENGINE_SRC}
     ${COMPONENTS_SRC}
     ${LAYOUTS_SRC}
 )

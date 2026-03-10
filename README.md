@@ -6,7 +6,7 @@ There is also `globals.c` and `globals.h` files that includes data that is share
 between all layouts, components, and the `main.c` file.
 
 ```
-cmake -S . -B build -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl
+cmake -S . -B build -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang
 cmake --build build
 ```
 

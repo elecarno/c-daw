@@ -3,6 +3,9 @@
 #include "includes/clay.h"
 #include "includes/clay_renderer_raylib.c"
 
+// audio engine
+#include "engine/engine.h"
+
 // shared data and component/layout headesr
 #include "headers/globals.h"
 #include "headers/components.h"
