@@ -42,6 +42,7 @@ set(LAYOUTS_SRC
     layouts/layoutMidiEditor.c
     layouts/layoutPlugins.c
     layouts/layoutTrack.c
+    layouts/layoutClip.c
 )
 
 add_executable(c-daw 

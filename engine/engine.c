@@ -6,7 +6,6 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "../includes/miniaudio.h"
 
-
 DAWEngine g_Engine = {0};
 ma_device g_Device;
 

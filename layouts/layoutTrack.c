@@ -4,6 +4,8 @@
 #include "../headers/components.h"
 #include "../headers/layouts.h" 
 
+float trackScroll = 0.0;
+
 // layout function
 void layoutTrack(AudioTrack *track) {
     CLAY_AUTO_ID({ // TRACK CONTAINER
