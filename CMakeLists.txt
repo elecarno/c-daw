@@ -32,6 +32,7 @@ set(ENGINE_SRC
 
 set(COMPONENTS_SRC
     components/cButtons.c
+    components/cDropdown.c
 )
 
 set(LAYOUTS_SRC
