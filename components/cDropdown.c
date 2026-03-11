@@ -55,7 +55,7 @@ void cDropdown(Clay_String text, DropdownItem dropdownItems[], int itemCount, in
                 .layout = { 
                     .layoutDirection = CLAY_TOP_TO_BOTTOM,
                     .sizing = { .width = CLAY_SIZING_FIXED(160) },
-                    .padding = { 0, 0, 1, 1},
+                    .padding = { 1, 1, 1, 1},
                     .childGap = 1
                 }
             }) {

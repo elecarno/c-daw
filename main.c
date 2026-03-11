@@ -16,6 +16,8 @@ void HandleClayErrors(Clay_ErrorData errorData) {
 }
 
 int main(void) {
+    engineInitialise();
+
     Clay_Raylib_Initialize(
         1280, 720, // width and height
         "c-DAW", // window title

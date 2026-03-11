@@ -8,5 +8,8 @@ Clay_RenderCommandArray layoutEditor();
 
 // sub layouts
 void layoutMenuBar();
+void layoutTimeline();
+void layoutMidiEditor();
+void layoutPlugins(float widthPercent);
 
 #endif

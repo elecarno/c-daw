@@ -19,6 +19,14 @@ void buttonUndo() {}
 
 void buttonRedo() {}
 
+void buttonPlay() {
+    enginePlay();
+}
+
+void buttonStop() {
+    engineStop();
+}
+
 void nothing() {}
 
 // dropdown options = { "Import Audio", buttonImportFile };
@@ -73,8 +81,8 @@ void layoutMenuBar() {
                 .childGap = 2 
             }
         }) {
-            cButton(CLAY_STRING("Play"), nothing);
-            cButton(CLAY_STRING("Stop"), nothing);
+            cButton(CLAY_STRING("Play"), buttonPlay);
+            cButton(CLAY_STRING("Stop"), buttonStop);
             cButton(CLAY_STRING("Record"), nothing);
         }
 

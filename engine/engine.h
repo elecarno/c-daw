@@ -28,6 +28,9 @@ typedef struct {
 extern DAWEngine g_Engine;
 
 // functions from engine.c
+bool engineInitialise();
+void enginePlay();
+void engineStop();
 bool AddTrackFromFile(DAWEngine* engine, const char* filePath);
 void OpenFileDialogAudio();
 

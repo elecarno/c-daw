@@ -38,6 +38,9 @@ set(COMPONENTS_SRC
 set(LAYOUTS_SRC
     layouts/layoutEditor.c
     layouts/layoutMenuBar.c
+    layouts/layoutTimeline.c
+    layouts/layoutMidiEditor.c
+    layouts/layoutPlugins.c
 )
 
 add_executable(c-daw 

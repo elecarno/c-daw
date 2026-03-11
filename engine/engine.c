@@ -8,47 +8,86 @@
 
 
 DAWEngine g_Engine = {0};
+ma_device g_Device;
 
-// CALLBACK ----------------------------------------------------------------------------------------
 void mixing_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount) {
-    DAWEngine* engine = (DAWEngine*)pDevice->pUserData; // Retrieve the engine
-    if (!g_Engine.is_playing) return;
-
+    DAWEngine* engine = (DAWEngine*)pDevice->pUserData;
     float* pOut = (float*)pOutput;
-    // clear the output buffer before playing any audio
-    memset(pOut, 0, frameCount * pDevice->playback.channels * sizeof(float));
 
-    for (int t = 0; t < g_Engine.is_playing; t++) {
-        AudioTrack* track = &g_Engine.tracks[t];
-        if (track->is_muted) continue;
+    // clear the buffer
+    memset(pOut, 0, frameCount * DAW_CHANNELS * sizeof(float));
+
+    // check if audio is being played
+    if (!engine->is_playing) return;
+
+    // loop through the loaded tracks
+    for (int t = 0; t < engine->track_count; t++) {
+        AudioTrack* track = &engine->tracks[t];
+        
+        if (track->is_muted || track->pSampleData == NULL) continue;
 
         for (ma_uint32 i = 0; i < frameCount; i++) {
-            ma_uint32 globalFrame = g_Engine.playhead + i;
+            // calculate position on the global timeline
+            ma_uint32 globalFrame = engine->playhead + i;
 
-            // Check if the global cursor is within this track's range
+            // check if the track has audio at the calculated position
             if (globalFrame >= track->track_offset && 
-                globalFrame < track->track_offset + track->total_frames) {
+                globalFrame < (track->track_offset + track->total_frames)) {
                 
                 ma_uint32 localFrame = globalFrame - track->track_offset;
                 
-                // Mix Left Channel
+                // mix the samples (additive mixing)
+                // left channel
                 pOut[i * 2] += track->pSampleData[localFrame * 2] * track->volume;
-                // Mix Right Channel
+                // right channel
                 pOut[i * 2 + 1] += track->pSampleData[localFrame * 2 + 1] * track->volume;
             }
         }
     }
 
-    g_Engine.playhead += frameCount;
+    // advance the global playhead by the number of frames just processed
+    engine->playhead += frameCount;
 }
 
+bool engineInitialise() {
+    // device configuration
+    ma_device_config config = ma_device_config_init(ma_device_type_playback);
+    config.playback.format   = DAW_FORMAT;      // f32
+    config.playback.channels = DAW_CHANNELS;    // 2
+    config.sampleRate        = DAW_SAMPLE_RATE; // 44100
+    config.dataCallback      = mixing_callback;
+    config.pUserData         = &g_Engine;       // pass engine to the callback
 
-// DECODER -----------------------------------------------------------------------------------------
+    // initialize hardware device
+    if (ma_device_init(NULL, &config, &g_Device) != MA_SUCCESS) {
+        printf("Failed to open playback device.\n");
+        return false;
+    }
+
+    // start audio thread
+    if (ma_device_start(&g_Device) != MA_SUCCESS) {
+        ma_device_uninit(&g_Device);
+        return false;
+    }
+
+    return true;
+}
+
+void enginePlay() {
+    g_Engine.is_playing = true;
+    printf("Playback started at frame %u\n", g_Engine.playhead);
+}
+
+void engineStop() {
+    g_Engine.is_playing = false;
+    g_Engine.playhead = 0; 
+    printf("Playback stopped.\n");
+}
+
 bool AddTrackFromFile(DAWEngine* engine, const char* filePath) {
     if (engine->track_count >= 16) return false; // Simple limit for now
 
     ma_decoder decoder;
-    // We tell miniaudio: "Whatever the file is, give it to me in f32, Stereo, 44.1kHz"
     ma_decoder_config config = ma_decoder_config_init(DAW_FORMAT, DAW_CHANNELS, DAW_SAMPLE_RATE);
     
     if (ma_decoder_init_file(filePath, &config, &decoder) != MA_SUCCESS) {
@@ -58,18 +97,16 @@ bool AddTrackFromFile(DAWEngine* engine, const char* filePath) {
     ma_uint64 frameCount;
     ma_decoder_get_length_in_pcm_frames(&decoder, &frameCount);
 
-    // Allocate the buffer for this specific track
     float* pBuffer = (float*)malloc(frameCount * DAW_CHANNELS * sizeof(float));
     
     ma_uint64 framesRead;
     ma_decoder_read_pcm_frames(&decoder, pBuffer, frameCount, &framesRead);
 
-    // Set up the new track in our engine
     AudioTrack* newTrack = &engine->tracks[engine->track_count];
     newTrack->pSampleData = pBuffer;
     newTrack->total_frames = (ma_uint32)framesRead;
-    newTrack->volume = 0.8f; // Default volume
-    newTrack->track_offset = 0; // Starts at the beginning of the timeline
+    newTrack->volume = 0.8f; // default volume
+    newTrack->track_offset = 0; // place audio at the beginning of the timeline
     newTrack->is_muted = false;
     snprintf(newTrack->name, 64, "Track %d", engine->track_count + 1);
 
@@ -79,22 +116,21 @@ bool AddTrackFromFile(DAWEngine* engine, const char* filePath) {
     return true;
 }
 
-// FILE LOADING ------------------------------------------------------------------------------------
 void OpenFileDialogAudio() {
     nfdchar_t *outPath = NULL;
-    // Filter for audio files
+    // filter for audio files
     nfdfilteritem_t filterItem[3] = { { "Audio Files", "wav,mp3,flac" }, { "WAV", "wav" }, { "MP3", "mp3" } };
     
-    // This opens the actual Windows/Mac/Linux file picker
+    // open file dialogue (for any OS)
     nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 3, NULL);
 
     if (result == NFD_OKAY) {
         printf("Success! Loading: %s\n", outPath);
-        
-        // Use the function we wrote earlier!
+
+        // add audio as track
         AddTrackFromFile(&g_Engine, outPath);
-        
-        // Remember to free the path memory allocated by NFD
+
+        // free path memory allocated by nfd
         NFD_FreePath(outPath);
     } 
     else if (result == NFD_CANCEL) {
