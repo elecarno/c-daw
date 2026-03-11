@@ -3,6 +3,9 @@
 
 #include "../includes/clay.h"
 
+// utilities
+Clay_String utilFixedClayString(char *text);
+
 // state
 extern int activeDropdownId;
 
@@ -14,5 +17,8 @@ extern Clay_Color COLOUR_WHITE;
 extern Clay_Color COLOUR_BACKGROUND;
 extern Clay_Color COLOUR_BUTTON_MAIN;
 extern Clay_Color COLOUR_BUTTON_HOVER;
+extern Clay_Color COLOUR_PANEL;
+
+extern Clay_Color COLOUR_TRACK_GREEN;
 
 #endif

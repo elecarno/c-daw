@@ -15,7 +15,7 @@ typedef struct {
 } AudioTrack;
 
 typedef struct {
-    AudioTrack tracks[4];   // 4 tracks for testing
+    AudioTrack tracks[16];   // 16 tracks for testing
     int track_count;
     ma_uint32 playhead; // the timeline cursor
     bool is_playing;

@@ -11,5 +11,6 @@ void layoutMenuBar();
 void layoutTimeline();
 void layoutMidiEditor();
 void layoutPlugins(float widthPercent);
+void layoutTrack(AudioTrack *track);
 
 #endif
