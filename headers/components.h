@@ -13,6 +13,6 @@ typedef struct {
 
 // components
 void cButton(Clay_String text, ButtonCallback onClick);
-void cDropdown(Clay_String text, DropdownItem dropdownItems[], int itemCount);
+void cDropdown(Clay_String text, DropdownItem dropdownItems[], int itemCount, int localId);
 
 #endif

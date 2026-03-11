@@ -18,9 +18,7 @@ Clay_RenderCommandArray layoutEditor() {
         .backgroundColor = COLOUR_BACKGROUND,
         .layout = {
             .layoutDirection = CLAY_TOP_TO_BOTTOM,
-            .sizing = toolLayoutExpand,
-            .padding = CLAY_PADDING_ALL(16),
-            .childGap = 16
+            .sizing = toolLayoutExpand
         }
     }) {
         layoutMenuBar();

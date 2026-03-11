@@ -62,6 +62,8 @@ int main(void) {
             GetFrameTime()
         );
 
+        SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
         // get layout render commands for the ui
         Clay_RenderCommandArray renderCommands = layoutEditor();
 
