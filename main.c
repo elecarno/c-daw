@@ -43,10 +43,12 @@ int main(void) {
 
     // update loop (per frame)
     while (!WindowShouldClose()) {
+        Vector2 dpiScale = GetWindowScaleDPI();
+
         // update dimensions every frame to handle resizing
         Clay_SetLayoutDimensions((Clay_Dimensions) {
-            .width = GetScreenWidth(),
-            .height = GetScreenHeight()
+            .width = (float)GetRenderWidth() / dpiScale.x,
+            .height = (float)GetRenderHeight() / dpiScale.y
         });
 
         // handle input

@@ -6,19 +6,16 @@
 
 Clay_RenderCommandArray layoutEditor() {
     Clay_BeginLayout(); // BEGIN LAYOUT
-
-    // layout tools
-    Clay_Sizing toolLayoutExpand = {
-        .width = CLAY_SIZING_GROW(0),
-        .height = CLAY_SIZING_GROW(0)
-    };
-
+    
     // layout
     CLAY(CLAY_ID("layoutEditor_background"), {
         .backgroundColor = COLOUR_BACKGROUND,
         .layout = {
             .layoutDirection = CLAY_TOP_TO_BOTTOM,
-            .sizing = toolLayoutExpand
+            .sizing = {
+                .width = CLAY_SIZING_GROW(),
+                .height = CLAY_SIZING_GROW()
+            }
         }
     }) {
         layoutMenuBar();
