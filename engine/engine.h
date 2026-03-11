@@ -7,9 +7,15 @@
 // define engine structure
 typedef struct {
     float* pSampleData;
-    ma_uint32 total_frames;   
-    float volume;            // 0.0 to 1.0 (or higher for gain)
-    ma_uint32 track_offset;
+    ma_uint32 total_frames;
+    ma_uint32 timeline_start; // position on the DAW timeline (in frames)
+    char name[64];
+} AudioClip;
+
+typedef struct {
+    AudioClip clips[8]; // max 8 clips for testing
+    int clip_count;
+    float volume;
     bool is_muted;
     char name[64];
 } AudioTrack;
@@ -31,7 +37,6 @@ extern DAWEngine g_Engine;
 bool engineInitialise();
 void enginePlay();
 void engineStop();
-bool AddTrackFromFile(DAWEngine* engine, const char* filePath);
 void OpenFileDialogAudio();
 
 #endif
