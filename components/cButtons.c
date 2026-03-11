@@ -17,18 +17,16 @@ void HandleButtonInteraction(Clay_ElementId elementId, Clay_PointerData pointerD
 
 // Base Button
 void cButton(Clay_String text, ButtonCallback onClick) {
-    CLAY(
-        CLAY_IDI("Button", text.length), {
+    CLAY(CLAY_IDI("cButton", text.length), {
         .layout = { .padding = { 16, 16, 8, 8 }},
-        .backgroundColor = { 140, 140, 140, 255 },
-        .cornerRadius = CLAY_CORNER_RADIUS(5)
+        .backgroundColor = COLOUR_BUTTON_MAIN,
     }) {
         Clay_OnHover(HandleButtonInteraction, (void*)onClick);
 
         CLAY_TEXT(text, CLAY_TEXT_CONFIG({
             .fontId = FONT_ID_BODY_16,
             .fontSize = 16,
-            .textColor = { 255, 255, 255, 255 }
+            .textColor = COLOUR_WHITE
         }));
     }
 }

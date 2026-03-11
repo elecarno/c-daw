@@ -10,6 +10,8 @@ cmake -S . -B build -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang
 cmake --build build
 ```
 
+Colour palette idea: https://lospec.com/palette-list/apollo
+
 #### Library Plans
  - Port Audio (Audio I/O)
  - libsndfile (file and codec handling)

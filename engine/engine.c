@@ -80,7 +80,7 @@ bool AddTrackFromFile(DAWEngine* engine, const char* filePath) {
 }
 
 // FILE LOADING ------------------------------------------------------------------------------------
-void HandleLoadButton() {
+void OpenFileDialogAudio() {
     nfdchar_t *outPath = NULL;
     // Filter for audio files
     nfdfilteritem_t filterItem[3] = { { "Audio Files", "wav,mp3,flac" }, { "WAV", "wav" }, { "MP3", "mp3" } };

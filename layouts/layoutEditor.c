@@ -1,21 +1,9 @@
 #include "../includes/clay.h"
-#include "../headers/globals.h"
-#include "../headers/layouts.h" 
-#include "../headers/components.h"
 #include "../engine/engine.h"
+#include "../headers/globals.h"
+#include "../headers/components.h"
+#include "../headers/layouts.h" 
 
-#include <stdio.h>
-
-bool pressedImportFile = false;
-
-// interaction functions
-void buttonImportFile() {
-    printf("pressed import");
-    HandleLoadButton();
-}
-
-
-// layout
 Clay_RenderCommandArray layoutEditor() {
     Clay_BeginLayout(); // BEGIN LAYOUT
 
@@ -26,8 +14,8 @@ Clay_RenderCommandArray layoutEditor() {
     };
 
     // layout
-    CLAY( CLAY_ID("layoutEditor_background"), {
-        .backgroundColor = COLOR_BACKGROUND,
+    CLAY(CLAY_ID("layoutEditor_background"), {
+        .backgroundColor = COLOUR_BACKGROUND,
         .layout = {
             .layoutDirection = CLAY_TOP_TO_BOTTOM,
             .sizing = toolLayoutExpand,
@@ -35,7 +23,7 @@ Clay_RenderCommandArray layoutEditor() {
             .childGap = 16
         }
     }) {
-        cButton(CLAY_STRING("Import Audio File"), buttonImportFile);
+        layoutMenuBar();
     }
 
     // END LAYOUT
