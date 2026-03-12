@@ -8,7 +8,7 @@ float trackScroll = 0.0;
 
 // layout function
 void layoutTrack(AudioTrack *track) {
-    CLAY_AUTO_ID({ // TRACK CONTAINER
+    CLAY(CLAY_SID(utilFixedClayString(track->name)), { // TRACK CONTAINER
         .layout = {
             .sizing = { 
                 .width = CLAY_SIZING_GROW(),
@@ -36,6 +36,19 @@ void layoutTrack(AudioTrack *track) {
                 .fontSize = 16,
                 .textColor = COLOUR_WHITE
             }));
+        }
+
+        CLAY_AUTO_ID({ // AUDIO SCROLL CONTAINER
+            CLAY_AUTO_ID({
+                .layout = {
+                    .sizing = {
+                        .width = CLAY_SIZING_GROW(),
+                        .height = CLAY_SIZING_GROW()
+                    }
+                }
+            }) {
+
+            }
         }
     }
 }
